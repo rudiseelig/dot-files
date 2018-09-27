@@ -140,3 +140,9 @@ function rr_last_commits() {
 function kill_em_all() {
   ps -fax | grep -v grep | grep $1 | awk '{print $2}' | xargs kill -9
 }
+
+# returns the current git branch you are in
+# useful for things like `git pull origin $(current_branch)
+function current_branch() {
+  git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3
+}
