@@ -31,6 +31,7 @@ Plug 'vim-scripts/Enter-Indent'
 Plug 'posva/vim-vue'
 Plug 'mattn/emmet-vim'
 Plug 'rudiseelig/solarized'
+Plug '/usr/local/opt/fzf'
 
 call plug#end()
 
@@ -288,6 +289,7 @@ map <leader>cm :FZF app/models<cr>
 map <leader>cp :FZF app/presenters<cr>
 map <leader>cs :FZF spec<cr>
 map <leader>cl :FZF lib<cr>
+
 map <leader>cc :sp config/application.yml<cr>
 map <leader>cr :topleft 100 :split config/routes.rb<cr>
 map <leader>cg :topleft 100 :split Gemfile<cr>
