@@ -28,7 +28,9 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/Enter-Indent'
-Plug '/usr/local/opt/fzf'
+Plug 'posva/vim-vue'
+Plug 'mattn/emmet-vim'
+Plug 'rudiseelig/solarized'
 
 call plug#end()
 
@@ -113,8 +115,8 @@ set expandtab
 set pastetoggle=<F12>
 
 " colorscheme Tomorrow
-colorscheme heroku-terminal
-set background=dark
+colorscheme solarized
+set background=light
 
 " Mapping for tab manipulation
 map <leader>tt :tabnew<cr>
@@ -122,6 +124,12 @@ map <leader>tc :tabclose<cr>
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprevious<cr>
 map <leader>tm :tabmove
+
+" Mapping for window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 nnoremap <leader>w :w<cr>
 nnoremap <leader>a :wa<cr>
@@ -184,8 +192,8 @@ set listchars=tab:▸\ ,eol:¬,trail:·
 highlight NonText guifg=#143c46
 highlight SpecialKey guifg=#143c46
 
-" spell checker, Portuguese and English as default language
-set spelllang=en_us,pt,de
+" spell checker, English as default language
+set spelllang=en_us,de
 set spell
 
 " fast nohighligth

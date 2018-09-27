@@ -18,9 +18,7 @@
 /config/database.yml
 public/uploads/
 config/database.yml
-*.swp
-*.swo
-*.swn
+*.sw*
 .ruby-version
 .nvmrc
 .DS_Store
