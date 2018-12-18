@@ -32,6 +32,7 @@ Plug 'posva/vim-vue'
 Plug 'mattn/emmet-vim'
 Plug 'rudiseelig/solarized'
 Plug '/usr/local/opt/fzf'
+Plug 'rizzatti/dash.vim'
 
 call plug#end()
 
@@ -115,9 +116,9 @@ set shiftwidth=2
 set expandtab
 set pastetoggle=<F12>
 
-" colorscheme Tomorrow
+" colorscheme Solarized
 colorscheme solarized
-set background=light
+set background=dark
 
 " Mapping for tab manipulation
 map <leader>tt :tabnew<cr>
