@@ -46,6 +46,7 @@ function check_binstubs() {
   else
     alias r='bundle exec rails'
     alias rake='bundle exec rake'
+    alias bundle='bundle'
   fi
 
   # detect rspec
