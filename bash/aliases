@@ -16,7 +16,6 @@ alias c='cd'
 
 # Projects
 alias code='cd ~/Code'
-alias labs='cd ~/Labs'
 
 # Git
 alias ?='git status'
@@ -37,6 +36,7 @@ alias gg='git log --oneline --abbrev-commit --all --graph --decorate --color'
 alias gl='git log --raw'
 alias glol="git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 alias glp='git log --pretty=oneline'
+alias gpfwl='git push --force-with-lease'
 alias gpl='git pull'
 alias gpm='git push origin master'
 alias ggpush='git push origin $(current_branch)'
@@ -53,6 +53,7 @@ alias whodid='git shortlog --summary --numbered'
 
 # Rails any version
 alias be='bundle exec'
+alias r='bundle exec rails'
 alias tld='tail -f log/development.log'
 alias tlt='tail -f log/test.log'
 alias tlp='tail -f log/production.log'
@@ -80,9 +81,3 @@ alias start-docker='eval $(docker-machine env dev)'
 
 # tmuxinator
 alias mux='tmuxinator'
-
-# Hanami
-alias h='bundle exec hanami'
-
-# mailhog
-alias mailhog='docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog'
