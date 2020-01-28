@@ -16,6 +16,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'neomake/neomake'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'w0rp/ale'
 Plug 'scrooloose/nerdtree'
 Plug 'slim-template/vim-slim'
 Plug 'stulzer/colorschemes'
@@ -33,6 +35,7 @@ Plug 'mattn/emmet-vim'
 Plug 'rudiseelig/solarized'
 Plug '/usr/local/opt/fzf'
 Plug 'rizzatti/dash.vim'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -46,7 +49,7 @@ filetype plugin indent on
 " Display current mode
 set showmode
 
-" Intuitive basckspace
+" Intuitive backspace
 set backspace=indent,eol,start
 
 " Handle multiple buffer better
@@ -145,19 +148,15 @@ vmap <leader>P "+P
 
 " vim-vroom configuration
 let g:vroom_use_terminal = 1
-let g:vroom_command_prefix="docker-compose run web"
 map <leader>s :VroomRunNearestTest<cr>
 map <leader>S :VroomRunTestFile<cr>
 
 " Trigger to run the whole RSpec suite
 function ClearScreenAndRunRSpec()
   :silent !clear
-  if filereadable("Dockerfile")
+  if filereadable("bin/rspec")
     :sp<cr>
-    :terminal docker-compose run web bundle exec rspec && docker-compose run web bundle exec rubocop
-  elseif filereadable("bin/rspec")
-    :sp<cr>
-    :terminal ./bin/rspec && bundle exec rubocop && bundle exec rails_best_practices
+    :terminal ./bin/rspec && bundle exec rubocop
   elseif filereadable("Gemfile") && filereadable("package.json")
     :sp<cr>
     :terminal bundle exec rspec && bundle exec rubocop && bundle exec rails_best_practices
@@ -176,10 +175,18 @@ autocmd BufNewFile,BufRead *_spec.rb compiler rspec
 
 "for ruby, autoindent with two spaces, always expand tabs
 autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,ftl set ai sw=2 sts=2 et
-autocmd FileType python set sw=4 sts=4 et
+autocmd FileType python set sw=2 sts=2 et
 
 au BufRead,BufNewFile *.ejs set filetype=html
 autocmd! BufRead,BufNewFile *.sass set filetype=sass
+
+" FORMATTERS
+au FileType javascript setlocal formatprg=prettier
+au FileType javascript.jsx setlocal formatprg=prettier
+au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+au FileType html setlocal formatprg=js-beautify\ --type\ html
+au FileType scss setlocal formatprg=prettier\ --parser\ css
+au FileType css setlocal formatprg=prettier\ --parser\ css
 
 " Set line break
 set linebreak
@@ -207,8 +214,8 @@ map <leader>nd :!node %<cr>
 " Mapping for quick js/less/scss folding
 nmap <leader>f vi{zf
 " Execute rubocop
-map <leader>u :sp<cr>:terminal docker-compose run web bundle exec rubocop<cr>
-map <leader>U :sp<cr>:terminal docker-compose run web bundle exec rubocop -a<cr>
+map <leader>u :sp<cr>:terminal bundle exec rubocop<cr>
+map <leader>U :sp<cr>:terminal bundle exec rubocop -a<cr>
 " Execute grunt test
 nmap <leader>g :!clear && npm test<cr>
 
@@ -271,7 +278,7 @@ function! ShowRoutes()
   :topleft 100 :split __Routes__
   :set buftype=nofile
   :normal 1GdG
-  :0r! docker-compose run web rake -s routes
+  :0r! bundle exec rake -s routes
   :exec ":normal " . line("$") . "^W_ "
   :normal 1GG
   :normal dd
