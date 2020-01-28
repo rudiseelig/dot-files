@@ -1,20 +1,22 @@
 ECHO 'Installing dependencies through brew'
-brew install git node nvm tmux reattach-to-user-namespace neovim ripgrep python python@2 heroku rbenv ruby-build fzf
+brew install git nvm tmux reattach-to-user-namespace neovim ripgrep python python@2 heroku rbenv ruby-build fzf
 ECHO 'Installing pip through easy install'
 ECHO 'Type your password when asked'
 sudo easy_install pip
 ECHO 'Installing powerline'
 pip install --user git+git://github.com/Lokaltog/powerline
 ECHO 'Installing ruby and making it global'
-rbenv install 2.5.1
-rben global 2.5.1
+rbenv install 2.6.5
+rben global 2.6.5
+ECHO 'Installing node'
+nvm install node
 ECHO 'Installing neovim packages'
 gem install neovim
-pip2.7 install neovim
+pip2 install neovim
 pip3 install neovim
 npm install -g neovim
 ECHO 'Cloning dot files'
-git clone https://github.com/stulzer/dot-files ~/.etc/
+git clone https://github.com/rudiseelig/dot-files ~/.etc/
 ECHO 'Creating and symlinking configurations'
 cd ~
 mkdir .ssh .secrets .config .config/nvim
