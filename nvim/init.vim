@@ -121,7 +121,7 @@ set pastetoggle=<F12>
 
 " colorscheme Solarized
 colorscheme solarized
-set background=dark
+set background=light
 
 " Mapping for tab manipulation
 map <leader>tt :tabnew<cr>
@@ -406,7 +406,7 @@ endfunction
 
 " nvim air-line
 let g:airline_powerline_fonts = 1
-let g:airline_theme='powerlineish'
+let g:airline_theme='soda'
 
 " beautify JSON
 function! JSONify()
