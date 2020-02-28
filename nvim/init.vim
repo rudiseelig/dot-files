@@ -151,24 +151,20 @@ let g:vroom_use_terminal = 1
 map <leader>s :VroomRunNearestTest<cr>
 map <leader>S :VroomRunTestFile<cr>
 
-" Trigger to run the whole RSpec suite
-function ClearScreenAndRunRSpec()
+" Reads from .runner file and execute each command in a terminal buffer
+function Runner()
   :silent !clear
-  if filereadable("bin/rspec")
-    :sp<cr>
-    :terminal ./bin/rspec && bundle exec rubocop
-  elseif filereadable("Gemfile") && filereadable("package.json")
-    :sp<cr>
-    :terminal bundle exec rspec && bundle exec rubocop && bundle exec rails_best_practices
-  elseif filereadable("package.json")
-    :sp<cr>
-    :terminal npm run test
+  if filereadable('.runner')
+    let s:lines = readfile('.runner')
+    let s:command = join(s:lines, ' && ')
+
+    :sp
+    execute "terminal " . s:command
   else
-    :sp<cr>
-    :terminal bundle exec rspec && bundle exec rubocop && bundle exec rails_best_practices
+    :echoerr expand('%:p:h') . '/.runner file not found.'
   end
 endfunction
-map <leader>R :call ClearScreenAndRunRSpec()<cr>
+map <leader>R :call Runner()<cr>
 
 " For the MakeGreen plugin and Ruby RSpec
 autocmd BufNewFile,BufRead *_spec.rb compiler rspec
