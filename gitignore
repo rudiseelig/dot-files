@@ -28,3 +28,5 @@ config/database.yml
 build.gradle
 config/initializers/englishify.rb
 .rspec
+
+.runner
