@@ -71,6 +71,7 @@ alias ff='open -a Firefox'
 alias up='docker-compose stop && rm tmp/pids/server.pid; docker-compose build web && docker-compose run web rails db:drop db:create db:schema:load db:seed && docker-compose up -d'
 alias simpleserver='php -S localhost:9999'
 alias rubocop='bundle exec rubocop'
+alias rubocop_changed='git ls-files -m | xargs ls -1 2>/dev/null | grep "\.rb$" | xargs rubocop'
 alias cat='ccat'
 
 # pow.cx

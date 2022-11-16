@@ -17,11 +17,12 @@ Plug 'neomake/neomake'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'w0rp/ale'
-Plug 'scrooloose/nerdtree'
+Plug 'dense-analysis/ale'
+Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'slim-template/vim-slim'
 Plug 'stulzer/colorschemes'
-Plug 'stulzer/vim-vroom/'
+Plug 'rudiseelig/vim-vroom/'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -29,13 +30,17 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" Plug 'stulzer/vim-airline-themes'
 Plug 'vim-scripts/Enter-Indent'
 Plug 'posva/vim-vue'
 Plug 'mattn/emmet-vim'
 Plug 'rudiseelig/solarized'
+Plug 'arcticicestudio/nord-vim'
+Plug 'stulzer/mitormk-laser'
 Plug '/usr/local/opt/fzf'
 Plug 'rizzatti/dash.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'natw/keyboard_cat.vim'
 
 call plug#end()
 
@@ -112,7 +117,7 @@ set nowritebackup
 set directory=$HOME/.vim/tmp//,.
 
 " Default tab width
-set tabstop=2
+set tabstop=4
 set shiftwidth=2
 
 " Use spaces instead of tabs
@@ -120,8 +125,9 @@ set expandtab
 set pastetoggle=<F12>
 
 " colorscheme Solarized
-colorscheme solarized
-set background=light
+colorscheme nord
+" colorscheme mitormk-laser
+set background=dark
 
 " Mapping for tab manipulation
 map <leader>tt :tabnew<cr>
@@ -170,7 +176,7 @@ map <leader>R :call Runner()<cr>
 autocmd BufNewFile,BufRead *_spec.rb compiler rspec
 
 "for ruby, autoindent with two spaces, always expand tabs
-autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,ftl set ai sw=2 sts=2 et
+autocmd FileType ruby,haml,eruby,yaml,html,javascript,jsx,sass,cucumber,ftl set ai sw=2 sts=2 et
 autocmd FileType python set sw=2 sts=2 et
 
 au BufRead,BufNewFile *.ejs set filetype=html
@@ -180,9 +186,40 @@ autocmd! BufRead,BufNewFile *.sass set filetype=sass
 au FileType javascript setlocal formatprg=prettier
 au FileType javascript.jsx setlocal formatprg=prettier
 au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+au FileType typescript.tsx setlocal formatprg=prettier\ --parser\ typescript
 au FileType html setlocal formatprg=js-beautify\ --type\ html
 au FileType scss setlocal formatprg=prettier\ --parser\ css
 au FileType css setlocal formatprg=prettier\ --parser\ css
+
+let g:jsx_ext_required = 0
+let g:ale_typescript_tsserver_use_global = 0
+let g:ale_completion_enabled = 1
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'typescript': ['tsserver', 'prettier', 'eslint'],
+\   'typescriptreact': ['tsserver', 'prettier', 'eslint'],
+\   'javascriptreact': ['eslint']
+\}
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'typescript': ['prettier'],
+\   'typescriptreact': ['prettier'],
+\   'javascriptreact': ['eslint'],
+\}
+
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_save = 1
+
+nnoremap <leader>af :ALEFix<cr>
+"Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
 
 " Set line break
 set linebreak
@@ -198,8 +235,8 @@ highlight NonText guifg=#143c46
 highlight SpecialKey guifg=#143c46
 
 " spell checker, English as default language
-set spelllang=en_us,de
-set spell
+" set spelllang=en_us,de
+" set spell
 
 " fast nohighligth
 map <leader>q :noh<cr>
@@ -213,7 +250,7 @@ nmap <leader>f vi{zf
 map <leader>u :sp<cr>:terminal bundle exec rubocop<cr>
 map <leader>U :sp<cr>:terminal bundle exec rubocop -a<cr>
 " Execute grunt test
-nmap <leader>g :!clear && npm test<cr>
+" nmap <leader>g :!clear && npm test<cr>
 
 " Function to align key value fat arrows in ruby, and equals in js, stolen
 " from @tenderlove vimrc file.
@@ -274,7 +311,7 @@ function! ShowRoutes()
   :topleft 100 :split __Routes__
   :set buftype=nofile
   :normal 1GdG
-  :0r! bundle exec rake -s routes
+  :0r! bundle exec rails routes
   :exec ":normal " . line("$") . "^W_ "
   :normal 1GG
   :normal dd
@@ -339,7 +376,7 @@ augroup END
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-nnoremap <C-n> :NERDTree <cr>
+nnoremap <C-n> :NvimTreeToggle <cr>
 
 " delimitMate configuration
 let delimitMate_matchpairs = "(:),[:],{:}"
@@ -401,8 +438,9 @@ function! TrimWhiteSpace()
 endfunction
 
 " nvim air-line
-let g:airline_powerline_fonts = 1
-let g:airline_theme='soda'
+let g:airline_powerline_fonts = 0
+let g:airline_theme='nord'
+let g:airline#extensions#tabline#enabled = 0
 
 " beautify JSON
 function! JSONify()
@@ -417,7 +455,7 @@ set mouse-=a
 " deoplete config
 let g:deoplete#enable_at_startup = 1
 " disable autocomplete
-let g:deoplete#disable_auto_complete = 1
+let g:deoplete#disable_auto_complete = 0
 if has("gui_running")
     inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 else
@@ -435,3 +473,15 @@ autocmd BufNewFile,BufReadPost *.mjml set filetype=haml
 
 " Remaps escape for terminal mode
 tnoremap <esc> <c-\><c-n>
+
+" Mappings to move lines
+" Those weird symbols are happening when I press Alt + j / Alt + k
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
+
+" Neovim tree configuration in lua
+luafile $HOME/.etc/nvim/lua/nvim-tree.lua

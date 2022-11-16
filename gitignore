@@ -15,11 +15,8 @@
 /logs
 /tmp
 /public/uploads
-/config/database.yml
 public/uploads/
-config/database.yml
 *.sw*
-.ruby-version
 .nvmrc
 .DS_Store
 /temp
