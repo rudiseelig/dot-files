@@ -6,8 +6,8 @@ sudo easy_install pip
 ECHO 'Installing powerline'
 pip install --user git+git://github.com/Lokaltog/powerline
 ECHO 'Installing ruby and making it global'
-rbenv install 2.6.5
-rben global 2.6.5
+rbenv install 3.1.3
+rben global 3.1.3
 ECHO 'Installing node'
 nvm install node
 ECHO 'Installing neovim packages'
