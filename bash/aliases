@@ -5,7 +5,7 @@ alias ec='nvim ~/.etc/bash/config && reload'    # Edit config
 alias ef='nvim ~/.etc/bash/functions && reload' # Edit functions
 alias ev='nvim ~/.etc/env/vars && reload'       # Edit environments variables
 alias vim='nvim'
-alias vimconf='nvim ~/.etc/nvim/init.vim'
+alias vimconf='cd ~/.config/nvim/lua/ && nvim'
 alias v='nvim'
 
 # List
@@ -74,11 +74,8 @@ alias rubocop='bundle exec rubocop'
 alias rubocop_changed='git ls-files -m | xargs ls -1 2>/dev/null | grep "\.rb$" | xargs rubocop'
 alias cat='ccat'
 
-# pow.cx
-alias rspow='touch ~/.pow/restart.txt'
-
 # docker
 alias start-docker='eval $(docker-machine env dev)'
 
-# tmuxinator
-alias mux='tmuxinator'
+alias pip='pip3'
+alias python='python3'

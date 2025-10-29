@@ -17,10 +17,8 @@
 /public/uploads
 public/uploads/
 *.sw*
-.nvmrc
 .DS_Store
 /temp
-/node_modules
 /.sass-cache
 build.gradle
 config/initializers/englishify.rb
