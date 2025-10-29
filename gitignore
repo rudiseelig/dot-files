@@ -25,3 +25,5 @@ config/initializers/englishify.rb
 .rspec
 
 .runner
+
+certs
